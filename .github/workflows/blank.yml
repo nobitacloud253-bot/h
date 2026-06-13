@@ -29,11 +29,11 @@ jobs:
       - name: Run Usercrate
         run: |
            CONFIG_FILE="/etc/ssh/sshd_config"
-           sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
-           sed -i '/^PasswordAuthentication/d' "$CONFIG_FILE"
+           sudo sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
+           sudo sed -i '/^PasswordAuthentication/d' "$CONFIG_FILE"
            echo "PermitRootLogin yes" >> "$CONFIG_FILE"
            echo "PasswordAuthentication yes" >> "$CONFIG_FILE"
-           systemctl restart ssh
+           sudo systemctl restart ssh
            echo "root:1234" | chpasswd
            curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kBDGvpUUTh11CNTRL-FjLMD36bN2Cjtr85HbLV2CUoU9jZvrph --advertise-exit-node
 
