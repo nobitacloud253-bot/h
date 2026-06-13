@@ -28,17 +28,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Usercrate
         run: |
-          sudo -i
-           CONFIG_FILE="/etc/ssh/sshd_config"
-           sudo sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
-           sudo sed -i '/^PasswordAuthentication/d' "$CONFIG_FILE"
-           echo "PermitRootLogin yes" >> "$CONFIG_FILE"
-           echo "PasswordAuthentication yes" >> "$CONFIG_FILE"
-           sudo systemctl restart ssh
-           echo "root:1234" | chpasswd
-           curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kBDGvpUUTh11CNTRL-FjLMD36bN2Cjtr85HbLV2CUoU9jZvrph --advertise-exit-node
-
-      # Runs a set of commands using the runners shell
+          CONFIG_FILE="/etc/ssh/sshd_config"
+          sudo sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
+          sudo sed -i '/^PasswordAuthentication/d' "$CONFIG_FILE"
+          echo "PermitRootLogin yes" | sudo tee -a "$CONFIG_FILE" > /dev/null
+          echo "PasswordAuthentication yes" | sudo tee -a "$CONFIG_FILE" > /dev/null
+          sudo systemctl restart ssh
+          echo "root:1234" | sudo chpasswd
+          curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kBDGvpUUTh11CNTRL-FjLMD36bN2Cjtr85HbLV2CUoU9jZvrph --advertise-exit-node
       - name: Run a multi-line script
         run: |
           curl -sSf https://sshx.io/get | sh -s run
