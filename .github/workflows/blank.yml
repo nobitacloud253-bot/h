@@ -28,6 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Usercrate
         run: |
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install curl wget git sudo zip -y
           sudo hostnamectl set-hostname nobitahost
           CONFIG_FILE="/etc/ssh/sshd_config"
           sudo sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
