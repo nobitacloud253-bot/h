@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Usercrate
         run: |
+          sudo hostnamectl set-hostname nobitahost
           CONFIG_FILE="/etc/ssh/sshd_config"
           sudo sed -i '/^PermitRootLogin/d' "$CONFIG_FILE"
           sudo sed -i '/^PasswordAuthentication/d' "$CONFIG_FILE"
